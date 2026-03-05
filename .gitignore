@@ -1,0 +1,9 @@
+node_modules/
+dist/
+__pycache__/
+*.joblib
+*.pyc
+.env
+.DS_Store
+.vscode/
+feature_names.txt
