@@ -146,7 +146,7 @@ function App() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        <img src="/images/exterior.png" alt="Modern Smart Home exterior at night" className="hero-image" />
+                        <img src={`${import.meta.env.BASE_URL}images/exterior.png`} alt="Modern Smart Home exterior at night" className="hero-image" />
                     </motion.div>
                 </section>
 
@@ -237,7 +237,7 @@ function App() {
 
                         {/* Result Panel */}
                         <motion.div className="glass-panel result-panel-wrapper" variants={itemVariants}>
-                            <div className="result-bg-image" style={{ backgroundImage: "url('/images/market.png')" }}></div>
+                            <div className="result-bg-image" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/market.png')` }}></div>
                             <div className="result-container blur-content">
                                 <AnimatePresence mode="wait">
                                     {loading ? (
@@ -288,7 +288,7 @@ function App() {
                 <section id="about" className="info-section max-w">
                     <div className="glass-panel info-row">
                         <div className="info-image-cont">
-                            <img src="/images/interior.png" alt="Futuristic interior" />
+                            <img src={`${import.meta.env.BASE_URL}images/interior.png`} alt="Futuristic interior" />
                         </div>
                         <div className="info-text">
                             <h2>Building the <span className="gradient-text">Future</span> of Living</h2>
