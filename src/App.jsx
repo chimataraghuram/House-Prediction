@@ -3,15 +3,17 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Building2, Home, BarChart3, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
 
-const defaultFeatures = {
-    MedInc: 3.5,
-    HouseAge: 30,
-    AveRooms: 5,
-    AveBedrms: 1,
-    Population: 1000,
-    AveOccup: 3,
-    Latitude: 17.4,
-    Longitude: 78.5
+const defaultUIState = {
+    city: "Custom",
+    latitude: 17.4,
+    longitude: 78.5,
+    income: 350000,
+    population: 1000,
+    houseSize: 1500,
+    houseAge: 30,
+    bedrooms: 2,
+    bedroomSize: 150,
+    occupants: 3
 };
 
 const indianCities = [
@@ -21,13 +23,20 @@ const indianCities = [
     { name: "Bangalore", lat: 12.971, lon: 77.594 },
     { name: "Delhi", lat: 28.613, lon: 77.209 },
     { name: "Chennai", lat: 13.082, lon: 80.270 },
-    { name: "Kolkata", lat: 22.572, lon: 88.363 }
+    { name: "Kolkata", lat: 22.572, lon: 88.363 },
+    { name: "Pune", lat: 18.520, lon: 73.856 },
+    { name: "Ahmedabad", lat: 23.022, lon: 72.571 },
+    { name: "Surat", lat: 21.170, lon: 72.831 },
+    { name: "Jaipur", lat: 26.912, lon: 75.787 },
+    { name: "Lucknow", lat: 26.846, lon: 80.946 },
+    { name: "Kanpur", lat: 26.449, lon: 80.331 }
 ];
 
 function App() {
-    const [features, setFeatures] = useState(defaultFeatures);
+    const [uiState, setUiState] = useState(defaultUIState);
     const [metadata, setMetadata] = useState(null);
     const [prediction, setPrediction] = useState(null);
+    const [predictionValue, setPredictionValue] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -54,19 +63,18 @@ function App() {
     }, []);
 
     const handleCityChange = (e) => {
-        const city = indianCities.find(c => c.name === e.target.value);
-        if (city && city.name !== "Custom") {
-            setFeatures(prev => ({
-                ...prev,
-                Latitude: city.lat,
-                Longitude: city.lon
-            }));
-        }
+        const cityName = e.target.value;
+        const cityInfo = indianCities.find(c => c.name === cityName);
+        setUiState(prev => ({
+            ...prev,
+            city: cityName,
+            ...(cityInfo && cityInfo.name !== "Custom" ? { latitude: cityInfo.lat, longitude: cityInfo.lon } : {})
+        }));
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFeatures(prev => ({
+        setUiState(prev => ({
             ...prev,
             [name]: parseFloat(value)
         }));
@@ -77,9 +85,21 @@ function App() {
         setLoading(true);
         setError('');
 
+        const modelFeatures = {
+            MedInc: uiState.income / 100000,
+            HouseAge: uiState.houseAge,
+            AveRooms: uiState.houseSize / 300,
+            AveBedrms: uiState.bedrooms,
+            Population: uiState.population,
+            AveOccup: uiState.occupants,
+            Latitude: uiState.latitude,
+            Longitude: uiState.longitude
+        };
+
         try {
-            const response = await axios.post('http://localhost:8000/predict', features);
+            const response = await axios.post('http://localhost:8000/predict', modelFeatures);
             setPrediction(response.data.formatted_price);
+            setPredictionValue(response.data.predicted_price);
         } catch (err) {
             console.error('Prediction failed:', err);
             setError(err.response?.data?.detail || 'Failed to communicate with prediction service.');
@@ -97,6 +117,17 @@ function App() {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
     };
+
+    let bgImage = `${import.meta.env.BASE_URL}images/market.png`;
+    if (predictionValue) {
+        if (predictionValue < 150000) {
+            bgImage = `${import.meta.env.BASE_URL}images/budget.png`;
+        } else if (predictionValue < 300000) {
+            bgImage = `${import.meta.env.BASE_URL}images/standard.png`;
+        } else {
+            bgImage = `${import.meta.env.BASE_URL}images/luxury.png`;
+        }
+    }
 
     return (
         <>
@@ -190,8 +221,9 @@ function App() {
                                     <label><span>Select Indian City</span></label>
                                     <select
                                         className="glass-input"
+                                        value={uiState.city}
                                         onChange={handleCityChange}
-                                        style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white' }}
+                                        style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', outline: 'none', cursor: 'pointer' }}
                                     >
                                         {indianCities.map(city => (
                                             <option key={city.name} value={city.name} style={{ background: '#1a1a1a' }}>{city.name}</option>
@@ -199,32 +231,34 @@ function App() {
                                     </select>
                                 </motion.div>
 
-                                {Object.keys(defaultFeatures).map((key) => {
-                                    const meta = metadata?.[key] || {};
-                                    const min = meta.min || 0;
-                                    const max = meta.max || 100;
-
-                                    return (
-                                        <motion.div className="input-group" key={key} variants={itemVariants}>
-                                            <label>
-                                                <span>{meta.label || key}</span>
-                                                <span className="value">
-                                                    {key === 'MedInc' ? `₹${(features[key] * 100000).toFixed(0)}` : features[key]?.toFixed(2)}
-                                                </span>
-                                            </label>
-                                            <input
-                                                type="range"
-                                                className="slider"
-                                                name={key}
-                                                min={min}
-                                                max={max}
-                                                step={(max - min) / 100}
-                                                value={features[key]}
-                                                onChange={handleChange}
-                                            />
-                                        </motion.div>
-                                    );
-                                })}
+                                {[
+                                    { key: 'income', label: 'Annual Income', min: 100000, max: 2000000, step: 50000, display: val => `₹${val.toLocaleString()}` },
+                                    { key: 'houseSize', label: 'House Size (sq ft)', min: 500, max: 5000, step: 100, display: val => val },
+                                    { key: 'houseAge', label: 'House Age (Years)', min: 1, max: 50, step: 1, display: val => val },
+                                    { key: 'bedrooms', label: 'Number of Bedrooms', min: 1, max: 5, step: 1, display: val => val },
+                                    { key: 'bedroomSize', label: 'Avg Bedroom Size (sq ft)', min: 100, max: 500, step: 10, display: val => val },
+                                    { key: 'population', label: 'Locality Population Density', min: 100, max: 10000, step: 100, display: val => val },
+                                    { key: 'occupants', label: 'Household Occupants', min: 1, max: 10, step: 1, display: val => val }
+                                ].map(({ key, label, min, max, step, display }) => (
+                                    <motion.div className="input-group" key={key} variants={itemVariants}>
+                                        <label>
+                                            <span>{label}</span>
+                                            <span className="value">
+                                                {display(uiState[key])}
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="range"
+                                            className="slider"
+                                            name={key}
+                                            min={min}
+                                            max={max}
+                                            step={step}
+                                            value={uiState[key]}
+                                            onChange={handleChange}
+                                        />
+                                    </motion.div>
+                                ))}
 
                                 <motion.div style={{ gridColumn: '1 / -1' }} variants={itemVariants}>
                                     <button type="submit" className="submit-btn jelly-btn" disabled={loading}>
@@ -237,7 +271,7 @@ function App() {
 
                         {/* Result Panel */}
                         <motion.div className="glass-panel result-panel-wrapper" variants={itemVariants}>
-                            <div className="result-bg-image" style={{ backgroundImage: `url('${import.meta.env.BASE_URL}images/market.png')` }}></div>
+                            <div className="result-bg-image" style={{ backgroundImage: `url('${bgImage}')`, transition: 'background-image 0.5s ease-in-out' }}></div>
                             <div className="result-container blur-content">
                                 <AnimatePresence mode="wait">
                                     {loading ? (

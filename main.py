@@ -30,7 +30,7 @@ FEATURE_METADATA = {
     "MedInc": {"label": "Median Income", "description": "Median income in block group (in tens of thousands $)", "min": 0.5, "max": 15.0},
     "HouseAge": {"label": "House Age", "description": "Median house age in block group", "min": 1, "max": 52},
     "AveRooms": {"label": "Average Rooms", "description": "Average number of rooms per household", "min": 1, "max": 10},
-    "AveBedrms": {"label": "Average Bedrooms", "description": "Average number of bedrooms per household", "min": 0.5, "max": 5},
+    "AveBedrms": {"label": "Average Bedrooms", "description": "Average number of bedrooms per household", "min": 1, "max": 5},
     "Population": {"label": "Population", "description": "Block group population", "min": 3, "max": 35000},
     "AveOccup": {"label": "Average Occupancy", "description": "Average number of household members", "min": 1, "max": 6},
     "Latitude": {"label": "Latitude", "description": "Block group latitude", "min": 8.0, "max": 38.0},
@@ -56,7 +56,7 @@ class HousingFeatures(BaseModel):
     MedInc: float = Field(..., example=3.5, description="Median Income")
     HouseAge: float = Field(..., example=30.0, description="Median House Age")
     AveRooms: float = Field(..., example=5.0, description="Average Rooms")
-    AveBedrms: float = Field(..., example=1.0, description="Average Bedrooms")
+    AveBedrms: int = Field(..., example=1, description="Average Bedrooms")
     Population: float = Field(..., example=1000.0, description="Population")
     AveOccup: float = Field(..., example=3.0, description="Average Occupancy")
     Latitude: float = Field(..., example=34.0, description="Latitude")
