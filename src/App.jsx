@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, Home, BarChart3, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
+import { Building2, Home, BarChart3, Mail, MapPin, CheckCircle2 } from 'lucide-react';
 
 const defaultUIState = {
     city: "Custom",
