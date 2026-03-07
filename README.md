@@ -87,7 +87,6 @@ npm run dev
 
 **Aura AI Systems**
 - **Location**: 123 Glass Tower, Cyber District
-- **Phone**: +91 6303506870
 - **Email**: systems@auraproperty.ai
 
 ---
