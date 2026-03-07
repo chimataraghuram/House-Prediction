@@ -87,7 +87,7 @@ npm run dev
 
 **Aura AI Systems**
 - **Location**: 123 Glass Tower, Cyber District
-- **Email**: systems@auraproperty.ai
+- **Email**: chimataraghuram02a@gmail.com
 
 ---
 
