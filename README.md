@@ -1,6 +1,7 @@
 # 🏠 House Price Prediction AI
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=vercel)](https://chimataraghuram.github.io/House-Prediction/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Post-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/posts/chimataraghuram_hackathon-artificialintelligence-machinelearning-activity-7435357802916823041-Ymhf?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFOtUXYBplcXqbLkAkO7uJZnotuCj1Y2ROw)
 [![Python](https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
@@ -23,8 +24,24 @@ Looking forward to participating in more events like this in the future! 🚀
 
 ---
 
+## 📸 Project Showcase
+
+### 1. Hero Experience
+![Hero Section](./screenshots/hero.png)
+
+### 2. AI Predictive Engine
+![Predictive Engine](./screenshots/engine.png)
+
+### 3. Technology & Innovation
+![About Section](./screenshots/about.png)
+
+---
+
 ## 🚀 Live Demo
 Experience the AI Engine in action: **[House Prediction Live Demo](https://chimataraghuram.github.io/House-Prediction/)**
+
+## 🔗 Connect with me
+Check out my journey and the project reveal on LinkedIn: **[Hackathon Project Post](https://www.linkedin.com/posts/chimataraghuram_hackathon-artificialintelligence-machinelearning-activity-7435357802916823041-Ymhf?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFOtUXYBplcXqbLkAkO7uJZnotuCj1Y2ROw)**
 
 ---
 
@@ -52,34 +69,6 @@ Experience the AI Engine in action: **[House Prediction Live Demo](https://chima
 - **API Architecture**: FastAPI
 - **Data Engineering**: Pandas & NumPy
 - **ML Utilities**: Joblib & Scikit-learn (Random Forest Regressor)
-
----
-
-## ⚙️ Installation & Setup
-
-### Prerequisites
-- Python 3.10+
-- Node.js & npm
-
-### 1. Backend Setup
-Navigate to the root directory and install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
-Start the API server:
-```bash
-python main.py
-```
-
-### 2. Frontend Setup
-Install npm dependencies:
-```bash
-npm install
-```
-Run the development server:
-```bash
-npm run dev
-```
 
 ---
 
