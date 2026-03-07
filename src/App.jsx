@@ -358,7 +358,7 @@ function App() {
                     </div>
                     <div className="footer-section">
                         <h4>Contact Office</h4>
-                        <div className="contact-item"><MapPin size={16} /><span>123 Glass Tower, Cyber District</span></div>
+                        <div className="contact-item"><MapPin size={16} /><span>Vijayawada, Andhra Pradesh, India</span></div>
 
                         <div className="contact-item"><Mail size={16} /><span>chimataraghuram02a@gmail.com</span></div>
                     </div>

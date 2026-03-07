@@ -75,7 +75,7 @@ Check out my journey and the project reveal on LinkedIn: **[Hackathon Project Po
 ## 📱 Contact
 
 **Aura AI Systems**
-- **Location**: 123 Glass Tower, Cyber District
+- **Location**: Vijayawada, Andhra Pradesh, India
 - **Email**: chimataraghuram02a@gmail.com
 
 ---
